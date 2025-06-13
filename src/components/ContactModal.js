@@ -91,6 +91,15 @@ export default function ContactModal({
               onChange={handleContactChange}
               disabled={contactLoading}
             />
+            <input
+              type='text'
+              name='phone'
+              placeholder='Phone (optional if email provided)'
+              className='rounded-md px-3 py-2 bg-[#232228] text-white border border-[#daa56a]/20 focus:border-[#daa56a] outline-none transition'
+              value={contactForm.phone}
+              onChange={handleContactChange}
+              disabled={contactLoading}
+            />
             <textarea
               name='message'
               placeholder='Your Message'

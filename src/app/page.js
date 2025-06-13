@@ -133,6 +133,7 @@ export default function Home() {
   const [contactForm, setContactForm] = useState({
     name: '',
     email: '',
+    phone: '', // added phone field
     message: '',
   });
   // Loading state for form submission
@@ -169,6 +170,11 @@ export default function Home() {
   // Handle contact form submit (Web3Forms integration)
   async function handleContactSubmit(e) {
     e.preventDefault();
+    // Require at least one of phone or email
+    if (!contactForm.email && !contactForm.phone) {
+      alert('Please provide at least an email or phone number.');
+      return;
+    }
     setContactLoading(true);
     try {
       const res = await fetch('https://api.web3forms.com/submit', {
@@ -180,6 +186,7 @@ export default function Home() {
           access_key: '0371dc22-f1ca-4668-81a6-de987e1fe788',
           name: contactForm.name,
           email: contactForm.email,
+          phone: contactForm.phone, // include phone in submission
           message: contactForm.message,
           subject: 'New Submission from Cirrica',
           botcheck: '',
@@ -188,7 +195,7 @@ export default function Home() {
       const data = await res.json();
       if (data.success) {
         alert('Thank you for your message!');
-        setContactForm({ name: '', email: '', message: '' });
+        setContactForm({ name: '', email: '', phone: '', message: '' }); // reset phone too
         setContactOpen(false);
       } else {
         alert('Something went wrong. Please try again later.');
